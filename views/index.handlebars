@@ -1,1 +1,15 @@
-<h1> Welcome ha ha ha haaaa </h1>
+		
+		 {{#each articles}}
+
+		 	<div class="list-group align-left">  				
+  				<form action="/{{this._id}}?_method=PUT" method="POST">
+	  				<a href="{{this.link}}" class="list-group-item active" target="_blank">
+	    				<h4 class="list-group-item-heading align-left">{{this.title}}</h4>    				
+	  				</a>
+	  				<p> Post Comments </p>
+                    <input type="text" name="comment">
+                    <button class="btn btn-success btn-xs" type="submit">Submit</button>
+                </form>
+			</div>
+
+		 {{/each}}
