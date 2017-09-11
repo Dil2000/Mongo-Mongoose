@@ -1,0 +1,28 @@
+{
+  "name": "mongo-mongoose",
+  "version": "1.0.0",
+  "description": "web scrape and mongo db",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dil2000/Mongo-Mongoose.git"
+  },
+  "author": "nelum",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Dil2000/Mongo-Mongoose/issues"
+  },
+  "homepage": "https://github.com/Dil2000/Mongo-Mongoose#readme",
+  "dependencies": {
+    "body-parser": "^1.18.0",
+    "cheerio": "^1.0.0-rc.2",
+    "express": "^4.15.4",
+    "express-handlebars": "^3.0.0",
+    "mongoose": "^4.11.10",
+    "morgan": "^1.8.2",
+    "request": "^2.81.0"
+  }
+}
