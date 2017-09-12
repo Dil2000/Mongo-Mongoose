@@ -2,12 +2,15 @@
 
 body{
   font-family: 'Padauk', sans-serif;
-  background-color:#9af750;
-/*  background-image:url("../img/food.jpeg");*/
-  color:#fff;
+  //background-color:#9af750;
   font-size:18px;
 }
 
+.jumbotron{
+  background-image:url("../img/giphy.gif");
+}
+
+/*
 td:hover{
   background-color:#9af750;
 }
@@ -27,7 +30,7 @@ button{
   color:white;
 }
 
-#submit{
+/*#submit{
   width:200px;
   height:50px;
   background-color:#000;
@@ -66,16 +69,16 @@ button{
 
 h1{
   font-size:60px;
-  /*font-family: 'Sedgwick Ave Display', cursive;*/
+  /*font-family: 'Sedgwick Ave Display', cursive;
 }
 
-button{
+/**button{
   color:#5D001E;
   padding:5px;
   margin:5px;
   border-radius: 25px;
-}
-
+}*/
+/*
 #burger{
   color:#5D001E;  
 }
@@ -91,7 +94,7 @@ select{
 
 .navbar,span,.container,a{
   /*background-color:#9af750;*/
-  background:transparent;
+/*  background:transparent;
   font-family: 'Padauk', sans-serif;
 }
 
@@ -138,7 +141,7 @@ footer{
   .wrapper{
     height:auto;
  }
-}
+}*/
 
 /* Icons */
 .fa {
@@ -160,3 +163,4 @@ footer{
    background-color:#fff;
 }
 
+*/*/*/

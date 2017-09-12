@@ -12,7 +12,11 @@
 			type: String,
 			required: true
 		},
-		// Reference Key
+		data: {
+			type: String,
+			required: true
+		},
+		// Reference Key		
 		note: {
 			type: Schema.Types.ObjectId,
 			ref: "Note"

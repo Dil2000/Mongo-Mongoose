@@ -1,15 +1,27 @@
 		
-		 {{#each articles}}
+		<div class="jumbotron">
+		  <h1>Tech News</h1>
+		  <p>scraped from techcrunch.com</p>
+		</div>
 
-		 	<div class="list-group align-left">  				
-  				<form action="/{{this._id}}?_method=PUT" method="POST">
-	  				<a href="{{this.link}}" class="list-group-item active" target="_blank">
-	    				<h4 class="list-group-item-heading align-left">{{this.title}}</h4>    				
-	  				</a>
-	  				<p> Post Comments </p>
-                    <input type="text" name="comment">
+		{{#each articles}}
+
+			<form action="/{{this._id}}" method="POST">
+				<div class="panel panel-primary-left">
+				  <a href="{{this.link}}" class="list-group-item active" target="_blank">
+				  	<div class="panel-heading">				  
+					  <h3 class="panel-title">{{this.title}}</h3>
+					</div>
+				  </a>
+				  <div class="panel-body">
+				    <p>{{this.data}}</p>
+				    <p> Comments Added - {{this.note}}</p>
+				    <p> Comments Added - {{notes.comment}}</p>
+				    <input type="text" name="comment">
                     <button class="btn btn-success btn-xs" type="submit">Submit</button>
-                </form>
-			</div>
+                    <button class="btn btn-warning btn-xs" type="reset">Delete</button>
+				  </div>
+				</div>
+			</form>
 
-		 {{/each}}
+		{{/each}}
