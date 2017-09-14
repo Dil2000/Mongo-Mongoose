@@ -80,6 +80,10 @@ app.get("/articles", function(req, res) {
 
 });
 
+// ---------------------------------------------------------------
+// Home page show the articles and comments
+// ---------------------------------------------------------------
+
 app.get("/notes", function(req, res) {
 
   // TODO: Finish the route so it grabs all of the articles
@@ -110,7 +114,7 @@ app.get("/", function(req, res) {
      else {
        //res.json(found);
         var articleObj = {
-                  articles: found,
+                  articles: found//,
                   //notes: Article.Note.comment
                 };
         res.render('index',articleObj);
@@ -124,18 +128,19 @@ app.get("/", function(req, res) {
 // ---------------------------------------------------------------
 // Get article comments
 // ---------------------------------------------------------------
-// app.get("/:id", function(req, res) {
-// 	Note.findOne({"_id" : req.params.id}, function(error,found) {
-//      if (error) {
-//         console.log(error);
-//      }
-//      else {
-//        //res.json(found);
-//        res.render('index',found)
-//      }
-//   })
 
-// });
+app.get("/:id", function(req, res) {
+	Note.findOne({"_id" : req.params.id}, function(error,found) {
+     if (error) {
+        console.log(error);
+     }
+     else {
+       //res.json(found);
+       res.render('index',found)
+     }
+  })
+
+});
 
 
 // ---------------------------------------------------------------
@@ -172,15 +177,21 @@ app.post("/:id", function(req, res) {
 });
 
 //delete
-// Todo.findByIdAndRemove(req.params.todoId, (err, todo) => {  
-//     // We'll create a simple object to send back with a message and the id of the document that was removed
-//     // You can really do this however you want, though.
-//     le response = {
-//         message: "Todo successfully deleted",
-//         id: todo._id
-//     };
-//     res.status(200).send(response);
-// });
+  app.delete("/:id", function(req, res) {
+    Note.find({ _id: id  }, function(err, user) {
+      if (err) throw err;
+
+      note.remove(function(err) {
+        if (err) throw err;
+
+        console.log('Note successfully deleted!');
+      });
+    });
+  });
+
+
+
+
 
 return router;
 

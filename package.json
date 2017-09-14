@@ -23,6 +23,8 @@
     "express-handlebars": "^3.0.0",
     "mongoose": "^4.11.10",
     "morgan": "^1.8.2",
+    "node-sass": "^4.5.3",
     "request": "^2.81.0"
-  }
+  },
+  "devDependencies": {}
 }
