@@ -23,7 +23,7 @@ module.exports = function(app) {
 app.get("/scrape", function(req, res) {
 
   // First, we grab the body of the html with request
-  request("https://techcrunch.com/", function(error, response, html) {
+  request("https://techcrunch.com/gadgets/", function(error, response, html) {
     // Then, we load that into cheerio and save it to $ for a shorthand selector
     var $ = cheerio.load(html);
     // Now, we grab every h2 within an article tag, and do the following:
@@ -35,8 +35,7 @@ app.get("/scrape", function(req, res) {
       // Add the text and href of every link, and save them as properties of the result object
       result.title = $(this).children("a").text();
       result.link = $(this).children("a").attr("href");
-      result.data = $(this).siblings("p").text("excerpt");
-
+      result.data = $(this).siblings("p.excerpt").text();
       // Using our Article model, create a new entry
       // This effectively passes the result object to the entry (and the title and link)
       var entry = new Article(result);
@@ -66,7 +65,6 @@ app.get("/scrape", function(req, res) {
 
 app.get("/articles", function(req, res) {
 
-  // TODO: Finish the route so it grabs all of the articles
   Article.find({}, function(error,found) {
      if (error) {
         console.log(error);
@@ -86,7 +84,6 @@ app.get("/articles", function(req, res) {
 
 app.get("/notes", function(req, res) {
 
-  // TODO: Finish the route so it grabs all of the articles
   Note.find({}, function(error,found) {
      if (error) {
         console.log(error);
@@ -95,51 +92,49 @@ app.get("/notes", function(req, res) {
        res.json(found);
        //res.render('index',found)
      }
-  })
-
+  });
 
 });
 
 
 // ---------------------------------------------------------------
-// Home page show the articles and comments
+// Home page show the articles
 // ---------------------------------------------------------------
 
 app.get("/", function(req, res) {
 
-  Article.find({}).populate('Note').exec(function(error,found) {
+  Article.find().sort({ "date" : 1 }).populate('note').exec(function(error,found) {
      if (error) {
         console.log(error);
      }
      else {
        //res.json(found);
         var articleObj = {
-                  articles: found//,
-                  //notes: Article.Note.comment
+                  articles: found
                 };
         res.render('index',articleObj);
         console.log("done");
      }
-  })
+  });
 
 });
 
 
 // ---------------------------------------------------------------
-// Get article comments
+// Get article by its Id
 // ---------------------------------------------------------------
 
 app.get("/:id", function(req, res) {
-	Note.findOne({"_id" : req.params.id}, function(error,found) {
+	Article.findOne({"_id" : req.params.id}).populate("Note")
+  .exe(function(error,found) {
      if (error) {
         console.log(error);
      }
      else {
-       //res.json(found);
-       res.render('index',found)
+       res.json(found);
+       //res.render('index',found)
      }
-  })
-
+  });
 });
 
 
@@ -150,11 +145,12 @@ app.get("/:id", function(req, res) {
 app.post("/:id", function(req, res) {
 
   var result = {}
-  result.comment = req.body.comment;
+  result.title = req.body.title;
+  result.body = req.body.comment;
 
-  var entry = new Note(result);
+  var newNote = new Note(result);
 
-  entry.save(function(error, doc) {
+  newNote.save(function(error, doc) {
     // Send any errors to the browser
     if (error) {
       res.send(error);
@@ -162,23 +158,25 @@ app.post("/:id", function(req, res) {
     // Otherwise
     else {
       // Find the article and push the new note id into the User's notes array
-      Article.findOneAndUpdate({}, { $push: { "note": doc._id } }, { new: true }, function(err, newdoc) {
-        // Send any errors to the browser
+      Article.findOneAndUpdate({ "_id" : req.params.id }, { "note": doc._id })
+      .exec(function(err, doc) {
         if (err) {
           res.send(err);
         }
         // Or send the newdoc to the browser
         else {
-          res.send(newdoc);
+         // res.send(doc);
+         res.render("index");
         }
       });
     }
   });
 });
 
+
 //delete
-  app.delete("/:id", function(req, res) {
-    Note.find({ _id: id  }, function(err, user) {
+  app.delete("/article/:id", function(req, res) {
+    Note.find({ "_id" : req.params.id  }, function(err, user) {
       if (err) throw err;
 
       note.remove(function(err) {
@@ -188,6 +186,37 @@ app.post("/:id", function(req, res) {
       });
     });
   });
+
+  app.get("article/:id", function(req, res) {
+    Article.find({"_id" : req.params.id}, function(err, user) {
+      if (error) {
+        console.log(error);
+      }
+      else {
+       //res.json(found);
+        var articleObj = {
+                  articles: found
+                };
+        res.json(found);
+        console.log("done");
+      }
+    });
+
+  });
+
+
+  app.delete("article/:id", function(req, res) {
+    Article.find({}, function(err, user) {
+      if (err) throw err;
+
+      Article.findByIdAndRemove(req.params.id,function(err) {
+        if (err) throw err;
+
+        console.log('Deleted !');
+      });
+    });
+  });
+
 
 
 

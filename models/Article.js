@@ -14,7 +14,11 @@
 		},
 		data: {
 			type: String,
-			required: true
+			required: false
+		},
+		date: {
+			type: Date,
+			default: Date.now
 		},
 		// Reference Key		
 		note: {
