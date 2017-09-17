@@ -126,7 +126,7 @@ app.get("/", function(req, res) {
 
 app.get("/:id", function(req, res) {
 	Article.findOne({"_id" : req.params.id}).populate("Note")
-  .exe(function(error,found) {
+  .exec(function(error,found) {
      if (error) {
         console.log(error);
      }
@@ -174,20 +174,43 @@ app.post("/:id", function(req, res) {
 });
 
 
-//delete
-  app.delete("/article/:id", function(req, res) {
-    Note.find({ "_id" : req.params.id  }, function(err, user) {
-      if (err) throw err;
+// ---------------------------------------------------------------
+// Delete a Note
+// ---------------------------------------------------------------
 
-      note.remove(function(err) {
-        if (err) throw err;
-
-        console.log('Note successfully deleted!');
-      });
+  app.get("/note/:id", function(req, res) {
+    Note.find({"_id" : req.params.id}, function(err, user) {
+      if (error) {
+        console.log(error);
+      }
+      else {
+       //res.json(found);
+        var articleObj = {
+                  articles: found
+                };
+        res.json(found);
+        console.log("Note done");
+      }
     });
+
   });
 
-  app.get("article/:id", function(req, res) {
+  app.post("/notes/:id", function(req, res) {
+    Note.findByIdAndRemove(req.params.id, function(err) {
+      if (err) {
+        console.log(err);
+      }
+      console.log('Note Deleted !');
+      res.render("index");
+    });
+  });
+ 
+
+// ---------------------------------------------------------------
+// Delete an article
+// ---------------------------------------------------------------
+
+  app.get("/article/:id", function(req, res) {
     Article.find({"_id" : req.params.id}, function(err, user) {
       if (error) {
         console.log(error);
@@ -205,20 +228,16 @@ app.post("/:id", function(req, res) {
   });
 
 
-  app.delete("article/:id", function(req, res) {
-    Article.find({}, function(err, user) {
-      if (err) throw err;
+  app.post("/article/:id", function(req, res) {
 
-      Article.findByIdAndRemove(req.params.id,function(err) {
-        if (err) throw err;
-
-        console.log('Deleted !');
-      });
+    Article.findByIdAndRemove(req.params.id,function(err) {
+      if (err) {
+        console.log(err);
+      }
+      console.log('Deleted !');
+      res.render("index");
     });
   });
-
-
-
 
 
 

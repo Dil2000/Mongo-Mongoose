@@ -15,7 +15,7 @@
 
 		  {{#each articles}}
 			<div class = "col-md-8">
-			  <form action="article/{{this._id}}" method="DELETE">
+			  <form action="article/{{this._id}}" method="POST">
 				<div class="panel panel-default-left">
 				  <a href="{{this.link}}" class="list-group-item active" target="_blank">
 				  	<div class="panel-heading">				  
@@ -36,9 +36,11 @@
 			  	  <h1>Notes</h1>
 			  	  <h3>Title : <input type="text" name="title" value="{{this.note.title}}"></h3>
 			  	  <p>Note : <input type="text" name="comment" class="form-control" value="{{this.note.body}}"></P>
-			  	  <button class="btn btn-success btn-xs" type="submit">Submit</button>
-                  <button class="btn btn-warning btn-xs" type="reset">Delete</button>
+			  	  <button class="btn btn-success btn-xs" type="submit">Submit</button>                  
                 </form>
+                <form action="notes/{{this._id}}" method="POST">
+                	<button class="btn btn-warning btn-xs" type="submit">Delete</button>
+               	</form>
 			  </div>
 			</div>
 	
