@@ -1,0 +1,32 @@
+		
+
+		<div class = "row">
+
+		  <h1> Scrapped News </h1>
+
+		  {{#each temps}}
+			<div class = "col-md-12 text-left">
+			  <form action="/add" method="POST">
+				<div class="panel panel-primary">
+				  <a href="{{this.link}}" class="list-group-item active" target="_blank">
+				  	<input type="hidden" name="link" class="form-control" value="{{this.link}}">
+				  	<div class="panel-heading">				  
+					  <h3 class="panel-title">{{this.title}}</h3>
+					  <input type="hidden" name="title" class="form-control" value="{{this.title}}">
+					</div>
+				  </a>
+				  <div class="panel-body">
+				    <p id = {{this._id}}>{{this.data}}</p>
+				    <input type="hidden" name="body" class="form-control" value="{{this.data}}">
+				    <button class="btn btn-success" type="submit">Save</button>
+				  </div>
+				</div>
+			  </form>
+			</div>
+				
+		  {{/each}}  
+
+		</div>
+
+
+

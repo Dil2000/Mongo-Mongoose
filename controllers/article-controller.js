@@ -6,6 +6,7 @@ var router = express.Router();
 // Requiring our Note and Article models
 var Note = require("../models/Note.js");
 var Article = require("../models/Article.js");
+var Temp = require("../models/temp.js");
 
 var path = require('path');
 var request = require('request'); // for web-scraping
@@ -17,10 +18,15 @@ module.exports = function(app) {
 
 		
 // ---------------------------------------------------------------
-// Get Data from Tech Crunch Website
+// Get Data from Tech Crunch Website save in a temporary table
 // ---------------------------------------------------------------
 
 app.get("/scrape", function(req, res) {
+
+  Temp.remove({}, function (err) {
+    if (err) return handleError(err);
+    // removed past data!
+  });
 
   // First, we grab the body of the html with request
   request("https://techcrunch.com/gadgets/", function(error, response, html) {
@@ -38,7 +44,7 @@ app.get("/scrape", function(req, res) {
       result.data = $(this).siblings("p.excerpt").text();
       // Using our Article model, create a new entry
       // This effectively passes the result object to the entry (and the title and link)
-      var entry = new Article(result);
+      var entry = new Temp(result);
 
       // Now, save that entry to the db
       entry.save(function(err, doc) {
@@ -54,8 +60,9 @@ app.get("/scrape", function(req, res) {
 
     });
   });
-  // Tell the browser that we finished scraping the text
-  res.send("Scrape Complete");
+  
+  // res.render('scrapped');
+  res.render("scrape");
 });
 
 
@@ -63,20 +70,49 @@ app.get("/scrape", function(req, res) {
 // Show data on the scraped from the website
 // ---------------------------------------------------------------
 
-app.get("/articles", function(req, res) {
+app.get("/scrapped", function(req, res) {
 
-  Article.find({}, function(error,found) {
+  Temp.find({}, function(error,found) {
      if (error) {
         console.log(error);
      }
      else {
-       res.json(found);
-       //res.render('index',found)
+        var articleObj = {
+          temps: found
+        };
+      //res.json(found);
+      res.render('scrapped',articleObj)
      }
   })
 
-
 });
+
+
+// ---------------------------------------------------------------
+// Save scraped articles
+// ---------------------------------------------------------------
+
+app.post("/add", function(req, res) {
+
+  var result = {}
+  result.title = req.body.title;
+  result.link = req.body.link;
+  result.data = req.body.body;
+
+  var newArticle = new Article(result);
+
+  newArticle.save(function(error, doc) {
+    // Send any errors to the browser
+    if (error) {
+      res.send(error);
+    }
+    // Otherwise
+    else {
+      res.redirect("/");
+    }
+  });
+});
+
 
 // ---------------------------------------------------------------
 // Home page show the articles and comments
@@ -131,8 +167,9 @@ app.get("/:id", function(req, res) {
         console.log(error);
      }
      else {
-       res.json(found);
+      // res.json(found);
        //res.render('index',found)
+       res.redirect("/");
      }
   });
 });
@@ -166,7 +203,8 @@ app.post("/:id", function(req, res) {
         // Or send the newdoc to the browser
         else {
          // res.send(doc);
-         res.render("index");
+         //res.render("index");
+         res.redirect("/");
         }
       });
     }
@@ -192,7 +230,6 @@ app.post("/:id", function(req, res) {
         console.log("Note done");
       }
     });
-
   });
 
   app.post("/notes/:id", function(req, res) {
@@ -201,7 +238,8 @@ app.post("/:id", function(req, res) {
         console.log(err);
       }
       console.log('Note Deleted !');
-      res.render("index");
+      //res.render("index");
+      res.redirect("/");
     });
   });
  
@@ -235,9 +273,18 @@ app.post("/:id", function(req, res) {
         console.log(err);
       }
       console.log('Deleted !');
-      res.render("index");
+      //res.render("index");
+      res.redirect("/");
     });
   });
+
+
+// app.post("/deleteAll", function(req, res) {
+//   Article.remove({}).populate('note').exec(function(err) {
+//     if (err) return handleError(err);
+
+//   });
+// });
 
 
 
