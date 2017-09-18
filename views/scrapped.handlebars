@@ -1,5 +1,5 @@
 		
-
+	<div class="container text-center">
 		<div class = "row">
 
 		  <h1> Scrapped News </h1>
@@ -7,8 +7,8 @@
 		  {{#each temps}}
 			<div class = "col-md-12 text-left">
 			  <form action="/add" method="POST">
-				<div class="panel panel-primary">
-				  <a href="{{this.link}}" class="list-group-item active" target="_blank">
+				<div class="panel">
+				  <a href="{{this.link}}" target="_blank">
 				  	<input type="hidden" name="link" class="form-control" value="{{this.link}}">
 				  	<div class="panel-heading">				  
 					  <h3 class="panel-title">{{this.title}}</h3>
@@ -27,6 +27,7 @@
 		  {{/each}}  
 
 		</div>
+	</div>
 
 
 

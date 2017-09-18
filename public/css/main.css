@@ -1,11 +1,51 @@
 body {
-  background-color: #e9e8e3;
+  background-color: #746858;
   background-image: url("/img/back.png");
-  font-family: "Cormorant Upright", serif;
-  color: #474643;
+  font-family: #1d160c;
+  color: #1d160c;
   width: 100%;
   height: auto; }
 
 .jumbotron {
-  background: transparent;
-  font-family: "UnifrakturCook", cursive; }
+  background-image: url("/img/paper.jpg");
+  font-family: "UnifrakturMaguntia", cursive;
+  color: #fff; }
+
+h1 {
+  font-family: "UnifrakturMaguntia", cursive;
+  color: #746858; }
+
+h5 {
+  color: #1d160c; }
+
+.panel-heading {
+  background-color: #746858; }
+
+.panel-body {
+  background-color: #f9f0f5; }
+
+a {
+  background-color: none;
+  color: #1d160c; }
+
+a:hover {
+  text-decoration: none;
+  text-shadow: 2px 2px #000;
+  color: #cc0000; }
+
+.fa {
+  text-decoration: none;
+  padding: 10px;
+  font-size: 25px;
+  width: 50px;
+  height: 40px;
+  text-align: center;
+  margin: 10px;
+  border-radius: 10%;
+  background-color: #cc0000;
+  color: #fff; }
+
+.fa:hover {
+  color: #fff;
+  text-decoration: none;
+  background-color: #746858; }

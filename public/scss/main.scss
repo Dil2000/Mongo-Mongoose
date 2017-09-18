@@ -1,15 +1,20 @@
 
-  $backgroundColor : #e9e8e3;
-  $2ndbackgroundColor: yellow;
+  $backgroundColor : #746858;
+  $fontColor: #1d160c;
+  $subHeadingColor:#fff;
+  $panelBodyBackground:#f9f0f5;
+  $hoverText : #cc0000;
+
   $backgroundImage : url('/img/back.png');
-  $textColor: #474643;
-  $subHeadingColor : #a19a8b;
+  $backImgJumbo: url('/img/paper.jpg');
+
   $headerFonts : 'UnifrakturCook', cursive;
   $fontType : 'Allerta Stencil', sans-serif;
-  $banner : 'Audiowide', cursive;
+  // $banner : 'Audiowide', cursive;
   $Headers: 'UnifrakturMaguntia', cursive;
-  $TextShadow : 2px 2px #a19a8b;
-  $hoverText : #2cc990;
+
+  $TextShadow : 2px 2px #000;
+
 
   @mixin hover-color($color) {
     &:hover{
@@ -17,39 +22,69 @@
     }
   }
 
-  @include keyframes(slide-down) {
-    0% { opacity: 1; }
-    90% { opacity: 0; }
-  }
-
-  .element {
-    font-family:$banner;
-    width: 100px;
-    height: 100px;
-    background: black;
-    @include animation('slide-down 5s 3');    
-  }
-
   body {
     background-color:$backgroundColor;
     background-image: $backgroundImage;
-    font-family:$fontType;
-    color:$textColor;
+    font-family:$fontColor;
+    color:$fontColor;
     width:100%;
     height:auto;
   }
 
   .jumbotron {
-    background: transparent;
-    font-family:$headerFonts ;
+    background-image:$backImgJumbo;
+    font-family:$Headers;
+    color:$subHeadingColor;
   }
 
-  h1,h2,h3 {
+  h1 {
     font-family: $Headers;
+    color: $backgroundColor;
   }
 
-  .noteBackground{
-    background-color:$2ndbackgroundColor;
+  h5 {
+    color:$fontColor;
   }
+
+  .panel-heading {
+    background-color: $backgroundColor;
+  }
+
+  .panel-body {
+    background-color:$panelBodyBackground;
+  }
+
+  a {
+    background-color:none;
+   // font-family:$fontType;
+    color:$fontColor;
+  }
+
+  a:hover {
+    text-decoration:none;
+    text-shadow:$TextShadow;
+    color: $hoverText;
+  }
+
+  .fa {
+    text-decoration: none;
+    padding: 10px;
+    font-size: 25px;
+    width: 50px;
+    height:40px;
+    text-align: center;
+    margin: 10px;
+    border-radius: 10%;
+    background-color:$hoverText ;
+    color:#fff
+  }
+
+  .fa:hover {
+    color:#fff;
+    text-decoration: none;
+    background-color: $backgroundColor;
+  }
+
+
 
 
