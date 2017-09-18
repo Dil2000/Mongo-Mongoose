@@ -1,10 +1,13 @@
 
   $backgroundColor : #e9e8e3;
+  $2ndbackgroundColor: yellow;
   $backgroundImage : url('/img/back.png');
   $textColor: #474643;
   $subHeadingColor : #a19a8b;
   $headerFonts : 'UnifrakturCook', cursive;
-  $fontType : 'Cormorant Upright', serif;
+  $fontType : 'Allerta Stencil', sans-serif;
+  $banner : 'Audiowide', cursive;
+  $Headers: 'UnifrakturMaguntia', cursive;
   $TextShadow : 2px 2px #a19a8b;
   $hoverText : #2cc990;
 
@@ -12,6 +15,19 @@
     &:hover{
       color: $hoverText;
     }
+  }
+
+  @include keyframes(slide-down) {
+    0% { opacity: 1; }
+    90% { opacity: 0; }
+  }
+
+  .element {
+    font-family:$banner;
+    width: 100px;
+    height: 100px;
+    background: black;
+    @include animation('slide-down 5s 3');    
   }
 
   body {
@@ -26,6 +42,14 @@
   .jumbotron {
     background: transparent;
     font-family:$headerFonts ;
+  }
+
+  h1,h2,h3 {
+    font-family: $Headers;
+  }
+
+  .noteBackground{
+    background-color:$2ndbackgroundColor;
   }
 
 

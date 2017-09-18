@@ -132,6 +132,20 @@ app.get("/notes", function(req, res) {
 
 });
 
+app.get("/articles", function(req, res) {
+
+  Article.find({}, function(error,found) {
+     if (error) {
+        console.log(error);
+     }
+     else {
+       res.json(found);
+       //res.render('index',found)
+     }
+  });
+
+});
+
 
 // ---------------------------------------------------------------
 // Home page show the articles
@@ -176,7 +190,7 @@ app.get("/:id", function(req, res) {
 
 
 // ---------------------------------------------------------------
-// Create Notes for aticles
+// Create & Edit Notes for aticles
 // ---------------------------------------------------------------
 
 app.post("/:id", function(req, res) {
@@ -216,7 +230,7 @@ app.post("/:id", function(req, res) {
 // Delete a Note
 // ---------------------------------------------------------------
 
-  app.get("/note/:id", function(req, res) {
+  app.get("/notes/:id", function(req, res) {
     Note.find({"_id" : req.params.id}, function(err, user) {
       if (error) {
         console.log(error);
@@ -237,9 +251,20 @@ app.post("/:id", function(req, res) {
       if (err) {
         console.log(err);
       }
-      console.log('Note Deleted !');
-      //res.render("index");
-      res.redirect("/");
+      else {
+          // Find the article and push the new note id into the User's notes array
+        Article.findOneAndUpdate({ "note" : req.params.id }, { "note": "" })
+        .exec(function(err, doc) {
+          if (err) {
+            res.send(err);
+          }
+          else {
+           // res.send(doc);
+           //res.render("index");
+           res.redirect("/");
+          }
+        });
+      }
     });
   });
  
@@ -279,10 +304,16 @@ app.post("/:id", function(req, res) {
   });
 
 
-// app.post("/deleteAll", function(req, res) {
-//   Article.remove({}).populate('note').exec(function(err) {
-//     if (err) return handleError(err);
 
+ 
+
+//  app.delete("/articles", function(req, res) {
+//   Article.remove({},function(err) {
+//      if (err) {
+//                 console.log(err)
+//             } else {
+//                 res.end('success');
+//             }
 //   });
 // });
 

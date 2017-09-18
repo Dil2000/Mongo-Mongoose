@@ -4,6 +4,7 @@
 			<div class = "col-md-6">
 			  <h1>Tech News</h1>
 			  <p>scraped from techcrunch.com</p>
+			  <p class="element"> Schould Scroll </p>
 			</div>
 			<div class = "col-md-6">
 				<img src = "/img/hp.gif" width="80%" height="auto">
@@ -12,46 +13,63 @@
 		</div>
 
 		<div class = "row">
-
-		  {{#each articles}}
-			<div class = "col-md-8">
-			  <form action="article/{{this._id}}" method="POST">
-				<div class="panel panel-default-left">
-				  <a href="{{this.link}}" class="list-group-item active" target="_blank">
-				  	<div class="panel-heading">				  
-					  <h3 class="panel-title">{{this.title}}</h3>
-					</div>
-				  </a>
-				  <div class="panel-body">
-				    <p id = {{this._id}}>{{this.data}}</p>
-				    <button class="btn btn-warning btn-xs" type="submit">Delete</button>
+		    {{#each articles}}
+			  <div class = "col-md-12 text-left">			  
+				<div class = "panel panel-default">				  
+				  <div class="panel-heading">
+				  	<div class = "row">		
+				  	  <div class="col-md-10">
+				  	  	<a href="{{this.link}}" class="list-group-item active" target="_blank">
+						   <h4><div class="panel-title">{{this.title}}</div></h4>
+						</a>
+					  </div>
+					  <div class= "col-md-2">
+						<form action="article/{{this._id}}" method="POST">
+						  <button class="btn btn-danger" type="submit">Delete Article</button>
+		                </form>
+		              </div>
+		            </div>
 				  </div>
-				</div>
-			  </form>
-			</div>
-				
-			<div class = "col-md-4">
-			  <div id ="notes">
-			  	<form action="/{{this._id}}" method="POST">
-			  	  <h1>Notes</h1>
-			  	  <h3>Title : <input type="text" name="title" value="{{this.note.title}}"></h3>
-			  	  <p>Note : <input type="text" name="comment" class="form-control" value="{{this.note.body}}"></P>
-			  	  <button class="btn btn-success btn-xs" type="submit">Submit</button>                  
-                </form>
-                <form action="notes/{{this._id}}" method="POST">
-                	<button class="btn btn-warning btn-xs" type="submit">Delete</button>
-               	</form>
-			  </div>
-			</div>
 	
-		  {{/each}}  
-
-		<!--<form action="/delete" method="POST">				
-             <button class="btn btn-warning btn-xs" type="reset">Delete</button>
-		</form>-->
-
+				  <div class="panel-body">
+					<div class = "row">
+					  <div class = "col-md-12">
+					  	 <p id = {{this._id}}>{{this.data}}</p>
+					  </div>
+					</div>
+					<div class ="row" id="NotesButton">
+					   <button class="btn btn-default"><i class="fa fa-pencil-square-o" aria-hidden="true"> Notes</i></button>
+					</div>
+					<div class = "row" class="noteBackground" id="{{this._id}}">
+					  <form action="/{{this._id}}" method="POST">
+					    <div class = "col-md-3"> 
+					       <input type="text" name="title" class="form-control" value="{{this.note.title}}">
+					    </div>
+						<div class ="col-md-7">
+						   <input type="text" name="comment" class="form-control" value="{{this.note.body}}">	
+						</div>
+						<div class="col-md-1">
+						   <button class="btn btn-success btn-xs" type="submit">Submit Note</button>
+						</div>
+					  </form>
+					  <form action="notes/{{this._id}}" method="POST">
+					  	<div class="col-md-1">
+					  		<button class="btn btn-warning btn-xs" type="submit">Delete Note</button>
+					  	</div>
+		              </form>  
+					</div>				    
+			  	  </div>
+				</div>			  
+			  </div>				
+    		{{/each}}  
 		</div>
 
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     	<script src="/app.js"></script>
+    	<script = "text/javaScript">
+    		$(".NotesButton").on("click",function(){
+    			alert("done");
+    			
+    		});
+    	</script
