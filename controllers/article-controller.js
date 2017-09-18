@@ -12,8 +12,6 @@ var path = require('path');
 var request = require('request'); // for web-scraping
 var cheerio = require('cheerio'); // for web-scraping
 
-
-
 module.exports = function(app) {
 
 		
@@ -230,7 +228,7 @@ app.post("/:id", function(req, res) {
 // Delete a Note
 // ---------------------------------------------------------------
 
-  app.get("/notes/:id", function(req, res) {
+  app.get("/note/:id", function(req, res) {
     Note.find({"_id" : req.params.id}, function(err, user) {
       if (error) {
         console.log(error);
@@ -246,25 +244,12 @@ app.post("/:id", function(req, res) {
     });
   });
 
-  app.post("/notes/:id", function(req, res) {
+  app.post("/note/:id", function(req, res) {
     Note.findByIdAndRemove(req.params.id, function(err) {
       if (err) {
         console.log(err);
       }
-      else {
-          // Find the article and push the new note id into the User's notes array
-        Article.findOneAndUpdate({ "note" : req.params.id }, { "note": "" })
-        .exec(function(err, doc) {
-          if (err) {
-            res.send(err);
-          }
-          else {
-           // res.send(doc);
-           //res.render("index");
-           res.redirect("/");
-          }
-        });
-      }
+      res.redirect("/");
     });
   });
  
@@ -302,20 +287,6 @@ app.post("/:id", function(req, res) {
       res.redirect("/");
     });
   });
-
-
-
- 
-
-//  app.delete("/articles", function(req, res) {
-//   Article.remove({},function(err) {
-//      if (err) {
-//                 console.log(err)
-//             } else {
-//                 res.end('success');
-//             }
-//   });
-// });
 
 
 

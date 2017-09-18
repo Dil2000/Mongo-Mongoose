@@ -52,7 +52,7 @@
 						   <button class="btn btn-success btn-xs" type="submit">Submit Note</button>
 						</div>
 					  </form>
-					  <form action="notes/{{this._id}}" method="POST">
+					  <form action="note/{{this.note._id}}" method="POST">
 					  	<div class="col-md-1">
 					  		<button class="btn btn-warning btn-xs" type="submit">Delete Note</button>
 					  	</div>
@@ -70,6 +70,6 @@
     	<script = "text/javaScript">
     		$(".NotesButton").on("click",function(){
     			alert("done");
-    			
+
     		});
     	</script
